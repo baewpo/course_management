@@ -1,0 +1,103 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  .navbar-logo {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  .menu-toggle-btn {
+    display: none;
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .navbar-menu {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    transition:
+      max-height 1s ease,
+      opacity 0.5s ease;
+  }
+  .navbar-menu.open {
+    opacity: 1;
+    max-height: 300px;
+  }
+  .navbar-item {
+    margin: 0 15px;
+  }
+  .navbar-link {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s ease;
+    &:hover {
+      color: blue;
+    }
+  }
+  .logout-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    &:hover {
+      background-color: #d1291d;
+    }
+  }
+  .navbar-right {
+    display: flex;
+    align-items: center;
+  }
+  .username-display {
+    margin-right: 20px;
+    font-size: 16px;
+  }
+
+  @media (max-width: 768px) {
+    .menu-toggle-btn {
+      display: block;
+      font-size: 16px;
+      padding: 0 20px;
+    }
+    .navbar-menu {
+      flex-direction: column;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      right: 0;
+      background-color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+    }
+    .navbar-menu.open {
+      margin: 20px;
+      opacity: 1;
+      max-height: 300px;
+    }
+    .navbar-item {
+      margin: 10px 0;
+      text-align: center;
+    }
+    .navbar-right {
+      flex-direction: column;
+      align-items: center;
+      margin-top: 10px;
+    }
+    .username-display {
+      margin: 0 0 10px;
+    }
+  }
+}
