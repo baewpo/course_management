@@ -1,6 +1,6 @@
 import { React } from 'react'
 import LoginForm from '../components/login/loginForm'
-import './loginPage.css'
+import './loginPage.scss'
 
 const LoginPage = () => {
    return (
