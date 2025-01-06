@@ -8,6 +8,7 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
       require: true,
       rejectUnauthorized: false,
     },
+    timezone: '+07:00'
   },
   logging: false
 });
