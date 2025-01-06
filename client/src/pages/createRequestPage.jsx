@@ -1,5 +1,5 @@
 import React from 'react'
-import RequestForm from '../components/request-form/requestForm'
+import RequestForm from 'components/request-form/requestForm'
 import './createRequestPage.scss'
 
 const CreateRequestPage = () => {

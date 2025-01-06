@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify"
 import "./App.scss"
 import NotFoundPage from "./pages/notFoundPage"
 import { AuthProvider } from "./contexts/AuthContext"
+import TrackStatusPage from "./pages/trackStatusPage"
 
 const App = () => {
   return (
@@ -21,6 +22,10 @@ const App = () => {
               <Route
                 path="/create-request"
                 element={<PrivateRoute component={CreateRequestPage} />}
+              />
+              <Route
+                path="/track-status"
+                element={<PrivateRoute component={TrackStatusPage} />}
               />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>

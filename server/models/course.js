@@ -8,10 +8,11 @@ const Course = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    course_code: {
+    courseCode: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
+      field: 'course_code'
     },
     description: {
       type: DataTypes.TEXT,
