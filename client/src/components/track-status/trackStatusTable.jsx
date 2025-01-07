@@ -9,7 +9,7 @@ import Select from "react-select"
 import qs from "qs"
 import { customSelectStyles } from "./customSelectStyles"
 import Pagination from "components/general/pagination"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import GeneralConfirmModal from "components/general/generalConfirmmodal"
 
 const statusOptions = [
@@ -28,19 +28,20 @@ const TrackStatusTable = () => {
 	const [isShowModal, setIsShowModal] = useState(false)
 	const [currentRequestId, setCurrentRequestId] = useState()
 	const navigate = useNavigate()
-
+	const location = useLocation()
 
 	useEffect(() => {
 		const queryParams = new URLSearchParams(window.location.search)
 		const page = parseInt(queryParams.get("page"), 10)
 		if (!page) {
 			updateQueryParams({ page: 1, status: selectedStatuses.join(",") })
+			fetchData(selectedStatuses)
 		} else if (currentPage !== page) {
 			setCurrentPage(page)
 		} else {
 			fetchData(selectedStatuses)
 		}
-	}, [currentPage, selectedStatuses])
+	}, [currentPage, selectedStatuses, location])
 
 	const updateQueryParams = (newParams = {}) => {
 		const queryParams = new URLSearchParams(window.location.search)
