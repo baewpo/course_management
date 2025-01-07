@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import axios from "../../config/axiosConfig"
-import { useNavigate } from "react-router-dom"
 import "./loginForm.css"
 import { showToast } from "../general/toast"
 import { useAuth } from "../../contexts/AuthContext"
@@ -9,7 +8,6 @@ const LoginForm = () => {
 	const { handleLoginSuccess } = useAuth()
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
-	const navigate = useNavigate()
 
 	const handleSubmit = async event => {
 		event.preventDefault()
@@ -17,7 +15,6 @@ const LoginForm = () => {
 		try {
 			const response = await axios.post("/api/users/login", userData)
 			handleLoginSuccess(response.data)
-			navigate("/create-request")
 			showToast("success", response.data.message)
 		} catch (error) {
 			showToast("error", error.response.data.message)

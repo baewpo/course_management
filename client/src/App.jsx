@@ -9,6 +9,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
 import PrivateRoute from "routes/privateRoutes"
 import "./App.scss"
+import StudentRequestPage from "pages/studentRequestPage"
 
 const App = () => {
 	return (
@@ -21,11 +22,21 @@ const App = () => {
 							<Route path="/" element={<PrivateRoute component={LoginPage} />} />
 							<Route
 								path="/create-request"
-								element={<PrivateRoute component={CreateRequestPage} />}
+								element={
+									<PrivateRoute requiredRole="student" component={CreateRequestPage} />
+								}
 							/>
 							<Route
 								path="/my-request"
-								element={<PrivateRoute component={TrackStatusPage} />}
+								element={
+									<PrivateRoute requiredRole="student" component={TrackStatusPage} />
+								}
+							/>
+							<Route
+								path="/student-request"
+								element={
+									<PrivateRoute requiredRole="admin" component={StudentRequestPage} />
+								}
 							/>
 							<Route path="*" element={<NotFoundPage />} />
 						</Routes>

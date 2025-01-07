@@ -2,8 +2,8 @@ import React from "react"
 import { Navigate, useLocation } from "react-router-dom"
 import { useAuth } from "../contexts/AuthContext"
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
-	const { isLoggedIn } = useAuth()
+const PrivateRoute = ({ component: Component, requiredRole, ...rest }) => {
+	const { isLoggedIn, role } = useAuth()
 	const location = useLocation()
 
 	if (!isLoggedIn && location.pathname !== "/") {
@@ -11,7 +11,13 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 	}
 
 	if (isLoggedIn && location.pathname === "/") {
-		return <Navigate to="/create-request" />
+		if (role === "admin") {
+			return <Navigate to="/student-request" />
+		} else return <Navigate to="/create-request" />
+	}
+
+	if (requiredRole && role !== requiredRole) {
+		return <Navigate to="/404" />
 	}
 
 	return <Component {...rest} />
