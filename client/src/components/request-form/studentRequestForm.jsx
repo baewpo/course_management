@@ -27,18 +27,20 @@ const StudentRequestForm = () => {
 	const [isShowModal, setIsShowModal] = useState(false)
 	const [updatedStatus, setUpdatedStatus] = useState({})
 	const navigate = useNavigate()
+	const location = useLocation()
 
 	useEffect(() => {
 		const queryParams = new URLSearchParams(window.location.search)
 		const page = parseInt(queryParams.get("page"), 10)
 		if (!page) {
 			updateQueryParams({ page: 1 })
+			fetchData(selectedStatuses)
 		} else if (currentPage !== page) {
 			setCurrentPage(page)
 		} else {
 			fetchData(selectedStatuses)
 		}
-	}, [currentPage, selectedStatuses])
+	}, [currentPage, selectedStatuses, location])
 
 	const updateQueryParams = (newParams = {}) => {
 		const queryParams = new URLSearchParams(window.location.search)
@@ -99,7 +101,6 @@ const StudentRequestForm = () => {
 
 	const confirmUpdate = async updatedStatus => {
 		try {
-			console.log(updatedStatus)
 			setIsLoading(true)
 			await axios.put("/api/courses/request/update-status", [
 				{
