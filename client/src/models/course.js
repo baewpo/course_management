@@ -1,7 +1,7 @@
-import CourseRequest from './courseRequest'
+import CourseRequest from "./courseRequest"
 
 class Course {
-	constructor(id = '', type = '', status = '', updated_at = '', course = new CourseRequest()) {
+	constructor(id = "", type = "", status = "", updated_at = "", course = new CourseRequest()) {
 		this.id = id
 		this.type = type
 		this.status = status

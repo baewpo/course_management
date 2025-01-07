@@ -64,6 +64,9 @@
 							border-right: 1px solid blue;
 							border-left: 1px solid white;
 						}
+						&.action {
+							width: 10%;
+						}
 					}
 				}
 			}
@@ -116,6 +119,32 @@
 								}
 								&.rejected {
 									background-color: red;
+								}
+							}
+						}
+						&.action {
+							width: 10%;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							.action-button {
+								padding: 3px 6px;
+								background-color: white;
+								border-radius: 5px;
+								transition: all 0.3s ease;
+								cursor: pointer;
+								&.delete {
+									border: 2px solid red;
+									color: red;
+									&:hover:not(:disabled) {
+										background-color: red;
+										color: white;
+									}
+									&:disabled {
+										color: #999;
+										border: 2px solid #999;
+										cursor: default;
+									}
 								}
 							}
 						}

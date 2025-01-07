@@ -1,5 +1,5 @@
-import React from 'react'
-import './pagination.scss'
+import React from "react"
+import "./pagination.scss"
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 	const handlePrevClick = () => {
@@ -44,13 +44,13 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 				className="pagination-button"
 				onClick={handlePrevClick}
 				disabled={currentPage === 1}>
-				{'<'}
+				{"<"}
 			</button>
 			<div className="page-numbers">
 				{generatePageNumbers().map(pageNumber => (
 					<button
 						key={pageNumber}
-						className={`pagination-page-button ${currentPage === pageNumber ? 'active' : ''}`}
+						className={`pagination-page-button ${currentPage === pageNumber ? "active" : ""}`}
 						onClick={() => handlePageClick(pageNumber)}>
 						{pageNumber}
 					</button>
@@ -60,7 +60,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 				className="pagination-button"
 				onClick={handleNextClick}
 				disabled={currentPage === totalPages}>
-				{'>'}
+				{">"}
 			</button>
 		</div>
 	)

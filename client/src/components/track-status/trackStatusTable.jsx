@@ -1,37 +1,39 @@
-import { useState, useEffect } from 'react'
-import axios from 'config/axiosConfig'
-import Course from 'models/course'
-import { Loading } from 'components/general/loading'
-import './trackStatusTable.scss'
-import { showToast } from 'components/general/toast'
-import dayjs from '../../config/dayjsConfig'
-import lodash from 'lodash'
-import Select from 'react-select'
-import qs from 'qs'
-import { customSelectStyles } from './customSelectStyles'
-import Pagination from 'components/general/pagination'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from "react"
+import axios from "config/axiosConfig"
+import { Loading } from "components/general/loading"
+import "./trackStatusTable.scss"
+import { showToast } from "components/general/toast"
+import dayjs from "../../config/dayjsConfig"
+import lodash from "lodash"
+import Select from "react-select"
+import qs from "qs"
+import { customSelectStyles } from "./customSelectStyles"
+import Pagination from "components/general/pagination"
+import { useNavigate } from "react-router-dom"
+import GeneralConfirmModal from "components/general/generalConfirmmodal"
 
 const TrackStatusTable = () => {
-	const user = JSON.parse(localStorage.getItem('user'))?.user
+	const user = JSON.parse(localStorage.getItem("user"))?.user
 	const [isLoading, setIsLoading] = useState(false)
 	const [request, setRequest] = useState([])
 	const [selectedStatuses, setSelectedStatuses] = useState([])
 	const [currentPage, setCurrentPage] = useState(1)
 	const [totalPages, setTotalPages] = useState(1)
+	const [isShowModal, setIsShowModal] = useState(false)
+	const [currentRequestId, setCurrentRequestId] = useState()
 	const navigate = useNavigate()
 
 	const statusOptions = [
-		{ value: 'pending', label: 'Pending' },
-		{ value: 'approved', label: 'Approved' },
-		{ value: 'rejected', label: 'Rejected' },
+		{ value: "pending", label: "Pending" },
+		{ value: "approved", label: "Approved" },
+		{ value: "rejected", label: "Rejected" },
 	]
 
 	useEffect(() => {
 		const queryParams = new URLSearchParams(window.location.search)
-		const page = parseInt(queryParams.get('page'), 10)
+		const page = parseInt(queryParams.get("page"), 10)
 		if (!page) {
-			updateQueryParams({ page: 1, status: selectedStatuses.join(',') })
+			updateQueryParams({ page: 1, status: selectedStatuses.join(",") })
 		} else if (currentPage !== page) {
 			setCurrentPage(page)
 		} else {
@@ -60,7 +62,7 @@ const TrackStatusTable = () => {
 
 	const handleStatusChange = selectedOptions => {
 		setSelectedStatuses(selectedOptions || [])
-		const statuses = selectedOptions?.map(option => option.value).join(',') || ''
+		const statuses = selectedOptions?.map(option => option.value).join(",") || ""
 		updateQueryParams({ page: 1, status: statuses })
 	}
 
@@ -70,21 +72,40 @@ const TrackStatusTable = () => {
 			const response = await axios.get(`/api/courses/request/user/${user.id}`, {
 				params: {
 					status: selectedOptions.map(option => option.value),
-					sortBy: 'updatedAt',
-					sortOrder: 'desc',
+					sortBy: "updatedAt",
+					sortOrder: "desc",
 					page: currentPage,
-					pageSize: 1,
+					pageSize: 10,
 				},
 				paramsSerializer: params => {
-					return qs.stringify(params, { arrayFormat: 'comma' })
+					return qs.stringify(params, { arrayFormat: "comma" })
 				},
 			})
-
 			setRequest(response.data.entities)
 			setTotalPages(response.data.totalPages)
 		} catch (error) {
 			console.error(error)
-			showToast('error', error.response?.data?.message)
+			showToast("error", error.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	const handleDeleteRequest = id => {
+		setCurrentRequestId(id)
+		setIsShowModal(true)
+	}
+
+	const confirmDelete = async () => {
+		try {
+			setIsLoading(true)
+			await axios.delete(`/api/courses/request/${currentRequestId}`)
+			setIsShowModal(false)
+			fetchData()
+			showToast("success", "Request deleted successfully")
+		} catch (error) {
+			console.error(error)
+			showToast("error", "Failed to delete request")
 		} finally {
 			setIsLoading(false)
 		}
@@ -109,7 +130,6 @@ const TrackStatusTable = () => {
 					<i className="fas fa-refresh" aria-hidden="true"></i>
 				</button>
 			</div>
-
 			<div className="track-status-container">
 				<table className="track-status-table">
 					<thead className="track-status-table-thead">
@@ -120,6 +140,7 @@ const TrackStatusTable = () => {
 							<th className="track-status-table-th description">Description</th>
 							<th className="track-status-table-th type">Type</th>
 							<th className="track-status-table-th status">Status</th>
+							<th className="track-status-table-th action">Action</th>
 						</tr>
 					</thead>
 					<tbody className="track-status-table-tbody">
@@ -127,7 +148,7 @@ const TrackStatusTable = () => {
 							request.map(item => (
 								<tr className="track-status-table-body-tr" key={item.id}>
 									<td className="track-status-table-td updated-at">
-										{dayjs(item.updatedAt).format('DD/MM/YYYY HH:mm:ss')}
+										{dayjs(item.updatedAt).format("DD/MM/YYYY HH:mm:ss")}
 									</td>
 									<td className="track-status-table-td code">{item.course.courseCode}</td>
 									<td className="track-status-table-td name">{item.course.name}</td>
@@ -141,6 +162,15 @@ const TrackStatusTable = () => {
 										<span className={`status-tag ${item.status}`}>
 											{lodash.capitalize(item.status)}
 										</span>
+									</td>
+									<td className="track-status-table-td action">
+										<button
+											className="action-button delete"
+											type="button"
+											onClick={() => handleDeleteRequest(item.id)}
+											disabled={item.status !== "pending"}>
+											<i className="fas fa-trash-alt" aria-hidden="true"></i>
+										</button>
 									</td>
 								</tr>
 							))
@@ -158,6 +188,12 @@ const TrackStatusTable = () => {
 				currentPage={currentPage}
 				totalPages={totalPages}
 				onPageChange={handlePageChange}
+			/>
+			<GeneralConfirmModal
+				show={isShowModal}
+				onClose={() => setIsShowModal(false)}
+				onConfirm={confirmDelete}
+				text={"Are you sure you want to delete this request?"}
 			/>
 		</div>
 	)

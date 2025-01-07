@@ -1,12 +1,12 @@
 class CourseRequest {
 	constructor(
-		id = '',
-		name = '',
-		course_code = '',
-		description = '',
-		credits = '',
-		instructor = '',
-		type = 'add',
+		id = "",
+		name = "",
+		course_code = "",
+		description = "",
+		credits = "",
+		instructor = "",
+		type = "add"
 	) {
 		this.id = id
 		this.name = name

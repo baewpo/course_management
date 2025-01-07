@@ -1,0 +1,55 @@
+.general-modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	.general-modal-content {
+		background-color: white;
+		padding: 20px;
+		border-radius: 8px;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		width: 100%;
+		overflow: hidden;
+		max-width: 500px;
+		margin: 20px;
+		.general-modal-label {
+			display: block;
+			margin: 20px 0;
+			font-size: 20px;
+			font-weight: bold;
+			text-align: center;
+		}
+		.general-modal-actions {
+			display: flex;
+			gap: 10px;
+			justify-content: flex-end;
+			margin-top: 20px;
+			.general-modal-button {
+				color: white;
+				padding: 8px;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+				transition: all 0.3s ease;
+				width: 100px;
+				background-color: blue;
+				&:hover {
+					background-color: #1e1ead;
+				}
+				&.cancel {
+					background-color: white;
+					color: blue;
+					border: solid 1px blue;
+					&:hover {
+						background-color: #f0f0ff;
+					}
+				}
+			}
+		}
+	}
+}
