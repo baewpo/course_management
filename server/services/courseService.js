@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const Course = require("../models/course")
 const RequestCourse = require("../models/requestCourse")
+const User = require("../models/user")
 const { Op } = require("sequelize")
 const { pagable } = require("../utils/pagination")
 
@@ -92,7 +93,6 @@ router.get("/request/user/:userId", async (req, res) => {
 			],
 			reqQuery: req.query,
 		})
-
 		res.json(result)
 	} catch (error) {
 		console.error(error)
@@ -140,6 +140,54 @@ router.delete("/request/:requestId", async (req, res) => {
 		res.status(500).json({
 			message: error.message || "An error occurred while deleting the request.",
 		})
+	}
+})
+
+router.get("/request", async (req, res) => {
+	try {
+		const { status, courseCode, type } = req.query
+
+		const conditions = {
+			...(status && {
+				status: {
+					[Op.in]: status.split(",").map((statusItem) => statusItem.trim().toLowerCase()),
+				},
+			}),
+			...(courseCode && {
+				[Op.or]: courseCode.split(",").map((code) => ({
+					"$course.course_code$": {
+						[Op.iLike]: code.trim(),
+					},
+				})),
+			}),
+			...(type && {
+				type: {
+					[Op.eq]: type.trim().toLowerCase(),
+				},
+			}),
+		}
+
+		const result = await pagable({
+			model: RequestCourse,
+			conditions: conditions,
+			include: [
+				{
+					model: Course,
+					as: "course",
+					attributes: ["id", "name", "courseCode", "description"],
+				},
+				{
+					model: User,
+					as: "user",
+					attributes: ["id", "name"],
+				},
+			],
+			reqQuery: req.query,
+		})
+		res.json(result)
+	} catch (error) {
+		console.error(error)
+		res.status(500).json({ message: "Error retrieving request courses", error: error.message })
 	}
 })
 

@@ -62,7 +62,7 @@ const RequestCourse = sequelize.define(
 RequestCourse.belongsTo(Course, { foreignKey: "courseId", as: "course"})
 Course.hasMany(RequestCourse, { foreignKey: "courseId" })
 
-RequestCourse.belongsTo(User, { foreignKey: "userId" })
+RequestCourse.belongsTo(User, { foreignKey: "userId", as: "user" })
 User.hasMany(RequestCourse, { foreignKey: "userId" })
 
 module.exports = RequestCourse

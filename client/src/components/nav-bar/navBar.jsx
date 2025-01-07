@@ -4,7 +4,7 @@ import "./navbar.scss"
 import { useAuth } from "../../contexts/AuthContext"
 
 const Navbar = () => {
-	const { isLoggedIn, username, handleLogout } = useAuth()
+	const { isLoggedIn, username, handleLogout, role } = useAuth()
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
 
 	const toggleMenu = () => {
@@ -20,16 +20,27 @@ const Navbar = () => {
 						{isMenuOpen ? "Close" : "Menu"}
 					</button>
 					<ul className={`navbar-menu ${isMenuOpen ? "open" : ""}`}>
-						<li className="navbar-item">
-							<Link className="navbar-link" to="/create-request" onClick={toggleMenu}>
-								Create Request
-							</Link>
-						</li>
-						<li className="navbar-item">
-							<Link className="navbar-link" to="/my-request" onClick={toggleMenu}>
-								My Request
-							</Link>
-						</li>
+						{role === "student" && (
+							<>
+								<li className="navbar-item">
+									<Link className="navbar-link" to="/create-request" onClick={toggleMenu}>
+										Create Request
+									</Link>
+								</li>
+								<li className="navbar-item">
+									<Link className="navbar-link" to="/my-request" onClick={toggleMenu}>
+										My Request
+									</Link>
+								</li>
+							</>
+						)}
+						{role === "admin" && (
+							<li className="navbar-item">
+								<Link className="navbar-link" to="/student-request" onClick={toggleMenu}>
+									Student Requests Management
+								</Link>
+							</li>
+						)}
 					</ul>
 					<div className="navbar-right">
 						<span className="username-display">{username}</span>

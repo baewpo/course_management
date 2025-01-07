@@ -1,0 +1,226 @@
+.student-form {
+	background-color: white;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	width: 100%;
+	max-width: 1200px;
+	margin: 20px;
+	.student-form-container {
+		border: solid 1px blue;
+		border-radius: 5px;
+		height: calc(100vh - 540px);
+		min-height: 240px;
+		overflow-y: hidden;
+		overflow-x: auto;
+		table-layout: fixed;
+		.student-form-table {
+			height: 100%;
+			border-collapse: collapse;
+			width: 100%;
+			.student-form-table-thead {
+				background-color: blue;
+				color: white;
+				position: relative;
+				.student-form-table-tr {
+					display: flex;
+					padding-right: 20px;
+					border-radius: 5px 5px 0 0;
+					.student-form-table-th {
+						padding: 0 5px;
+						display: block;
+						text-overflow: ellipsis;
+						overflow: hidden;
+						white-space: nowrap;
+						min-width: 80px;
+						&.updated-at {
+							width: 20%;
+							border-radius: 5px 0 0 0;
+							min-width: 100px;
+						}
+						&.code {
+							width: 10%;
+							border-right: 1px solid blue;
+							border-left: 1px solid white;
+							min-width: 100px;
+						}
+						&.name {
+							width: 20%;
+							border-right: 1px solid blue;
+							border-left: 1px solid white;
+						}
+						&.type {
+							width: 10%;
+							border-right: 1px solid blue;
+							border-left: 1px solid white;
+						}
+						&.status {
+							width: 15%;
+							border-right: 1px solid blue;
+							border-left: 1px solid white;
+						}
+						&.request-by {
+							width: 20%;
+							border-right: 1px solid blue;
+							border-left: 1px solid white;
+						}
+						&.action {
+							width: 10%;
+						}
+					}
+				}
+			}
+			.student-form-table-tbody {
+				display: block;
+				height: 100%;
+				overflow-y: scroll;
+				.student-form-table-body-tr {
+					display: flex;
+					.student-form-table-td {
+						display: block;
+						height: 48px;
+						padding: 12px 15px;
+						background-color: #f4f4f4;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						overflow: hidden;
+						max-width: 300px;
+						min-width: 100px;
+						user-select: none;
+						&.updated-at {
+							width: 20%;
+							min-width: 100px;
+							text-align: center;
+						}
+						&.code {
+							width: 10%;
+							text-align: center;
+						}
+						&.name {
+							width: 20%;
+						}
+						&.type {
+							width: 10%;
+							text-align: center;
+						}
+						&.status {
+							width: 15%;
+							text-align: center;
+							.status-tag {
+								background-color: #5079ff;
+								padding: 5px 10px;
+								border-radius: 20px;
+								color: white;
+								&.approved {
+									background-color: limegreen;
+								}
+								&.rejected {
+									background-color: red;
+								}
+							}
+						}
+						&.request-by {
+							text-align: center;
+							width: 20%;
+						}
+						&.action {
+							width: 10%;
+							gap: 5px;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							.action-button {
+								height: 30px;
+								width: 30px;
+								background-color: white;
+								border-radius: 5px;
+								transition: all 0.3s ease;
+								cursor: pointer;
+								&.approve {
+									border: 2px solid limegreen;
+									color: limegreen;
+									font-weight: 800;
+									&:hover:not(:disabled) {
+										background-color: limegreen;
+										color: white;
+									}
+                                    &:disabled {
+										color: #999;
+										border: 2px solid #999;
+										cursor: default;
+									}
+								}
+								&.reject {
+									border: 2px solid red;
+									color: red;
+									&:hover:not(:disabled) {
+										background-color: red;
+										color: white;
+									}
+									&:disabled {
+										color: #999;
+										border: 2px solid #999;
+										cursor: default;
+									}
+								}
+							}
+						}
+						&.no-data {
+							width: 100%;
+							max-width: 100%;
+							text-align: center;
+						}
+					}
+				}
+			}
+			.student-form-table-body-tr:nth-child(even) .student-form-table-td {
+				background-color: #e9ecef;
+			}
+		}
+	}
+	.table-controls {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		width: 100%;
+		margin-bottom: 20px;
+		flex-wrap: wrap;
+		.refresh-button {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 18px;
+			height: 38px;
+			width: 50px;
+			background-color: white;
+			color: blue;
+			border: 1px solid blue;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			&:hover {
+				background-color: blue;
+				color: white;
+			}
+		}
+		.filter-controls {
+			flex-grow: 1;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			min-width: 200px;
+		}
+		@media (max-width: 768px) {
+			.table-controls {
+				flex-direction: column;
+				gap: 15px;
+			}
+			.filter-controls {
+				width: 100%;
+				min-width: unset;
+			}
+			.refresh-button {
+				width: 100%;
+			}
+		}
+	}
+}
