@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import './requestForm.scss'
-import User from 'models/user'
-import CourseRequest from 'models/courseRequest'
-import axios from 'config/axiosConfig'
-import { showToast } from 'components/general/toast'
-import { Loading } from 'components/general/loading'
-import ConfirmModal from './confirmModal'
+import React, { useEffect, useState } from "react"
+import "./requestForm.scss"
+import User from "models/user"
+import CourseRequest from "models/courseRequest"
+import axios from "config/axiosConfig"
+import { showToast } from "components/general/toast"
+import { Loading } from "components/general/loading"
+import ConfirmModal from "./confirmModal"
 import { useNavigate } from "react-router-dom"
+import qs from "qs"
 
 const RequestForm = () => {
 	const [user, setUser] = useState(new User())
 	const [coursesRequest, setCoursesRequest] = useState([new CourseRequest()])
-	const [searchStates, setSearchStates] = useState(['search'])
+	const [searchStates, setSearchStates] = useState(["search"])
 	const [readOnlyStates, setReadOnlyStates] = useState([false])
 	const [isLoading, setIsLoading] = useState(false)
 	const [isShowModal, setIsShowModal] = useState(false)
@@ -21,12 +22,12 @@ const RequestForm = () => {
 		const fetchUserData = async () => {
 			setIsLoading(true)
 			try {
-				const userData = JSON.parse(localStorage.getItem('user'))?.user
+				const userData = JSON.parse(localStorage.getItem("user"))?.user
 				if (userData) {
 					setUser(userData)
 				}
 			} catch (error) {
-				console.error('Error parsing user data:', error)
+				console.error("Error parsing user data:", error)
 			}
 			setTimeout(() => {
 				setIsLoading(false)
@@ -61,7 +62,7 @@ const RequestForm = () => {
 	}
 
 	const updateSearchAndReadOnlyStates = courses => {
-		setSearchStates(courses.map(course => (course.name ? 'clear' : 'search')))
+		setSearchStates(courses.map(course => (course.name ? "clear" : "search")))
 		setReadOnlyStates(courses.map(course => Boolean(course.name)))
 	}
 
@@ -79,7 +80,7 @@ const RequestForm = () => {
 			!courseCode ||
 			coursesRequest.some((course, idx) => course.code === courseCode && idx !== index)
 		) {
-			showToast('error', 'Course code must not be empty or duplicate.')
+			showToast("error", "Course code must not be empty or duplicate.")
 		} else {
 			await handleSearch(courseCode, index)
 		}
@@ -97,10 +98,10 @@ const RequestForm = () => {
 					return updated
 				})
 			} else {
-				showToast('error', 'Course not found.')
+				showToast("error", "Course not found.")
 			}
 		} catch (error) {
-			showToast('error', error.response?.data?.message)
+			showToast("error", error.response?.data?.message)
 		} finally {
 			setIsLoading(false)
 		}
@@ -108,26 +109,44 @@ const RequestForm = () => {
 
 	const handleSubmit = async e => {
 		e.preventDefault()
-		if (searchStates.every(state => state === 'clear')) {
+		if (searchStates.every(state => state === "clear")) {
 			setIsShowModal(true)
 		} else {
-			showToast('error', 'Please insert required fields before submitting.')
+			showToast("error", "Please insert required fields before submitting.")
 		}
 	}
 
 	const handleShowModalConfirm = async () => {
 		try {
+			const { data } = await axios.get(`/api/courses/request/user/${user.id}`, {
+				params: {
+					courseCode: coursesRequest.map(({ courseCode }) => courseCode),
+					status: "pending",
+				},
+				paramsSerializer: params => qs.stringify(params, { arrayFormat: "comma" }),
+			})
+
+			if (data.entities.length) {
+				const existingCourses = data.entities.map(item => item.course.courseCode).join(", ")
+				showToast(
+					"error",
+					`Pending request exists for: ${existingCourses}. Please cancel or wait for status update.`
+				)
+				return
+			}
+
 			const request = coursesRequest.map(({ type, id }) => ({
 				type,
 				courseId: id,
 				userId: user.id,
 			}))
-			const { data } = await axios.post('/api/courses/request/create', request)
-			showToast('success', data.message)
+
+			const response = await axios.post("/api/courses/request/create", request)
+			showToast("success", response.data.message)
 			setIsShowModal(false)
-			navigate('/track-status')
+			navigate("/my-request")
 		} catch (error) {
-			showToast('error', error.response?.data?.message || 'Error occurred')
+			showToast("error", error.response?.data?.message || "Error occurred")
 			console.error(error)
 		}
 	}
@@ -142,7 +161,7 @@ const RequestForm = () => {
 						<input
 							className="request-form-input"
 							type="text"
-							value={user.name || ''}
+							value={user.name || ""}
 							readOnly
 						/>
 					</div>
@@ -151,7 +170,7 @@ const RequestForm = () => {
 						<input
 							className="request-form-input"
 							type="text"
-							value={user.number || ''}
+							value={user.studentNumber || ""}
 							readOnly
 						/>
 					</div>
@@ -160,7 +179,7 @@ const RequestForm = () => {
 						<input
 							className="request-form-input"
 							type="text"
-							value={user.year || ''}
+							value={user.classYear || ""}
 							readOnly
 						/>
 					</div>
@@ -169,7 +188,7 @@ const RequestForm = () => {
 						<input
 							className="request-form-input"
 							type="email"
-							value={user.email || ''}
+							value={user.email || ""}
 							readOnly
 						/>
 					</div>
@@ -178,7 +197,7 @@ const RequestForm = () => {
 						<input
 							className="request-form-input"
 							type="text"
-							value={user.tel || ''}
+							value={user.tel || ""}
 							readOnly
 						/>
 					</div>
@@ -187,7 +206,7 @@ const RequestForm = () => {
 						<input
 							className="request-form-input"
 							type="text"
-							value={user.major || ''}
+							value={user.major.name || ""}
 							readOnly
 						/>
 					</div>
@@ -214,16 +233,16 @@ const RequestForm = () => {
 											<input
 												className="input-field code"
 												type="text"
-												value={course.code || ''}
+												value={course.code || ""}
 												onChange={e => {
 													handleCourseChange(
 														index,
-														'code',
+														"code",
 														e.target.value.toLowerCase()
 													)
 												}}
 												onKeyDown={e => {
-													if (e.key === 'Enter') {
+													if (e.key === "Enter") {
 														handleCourseSearch(course.code, index)
 													}
 												}}
@@ -233,16 +252,16 @@ const RequestForm = () => {
 											<button
 												type="button"
 												className={`search-icon ${
-													searchStates[index] === 'clear' ? 'clear-icon' : ''
+													searchStates[index] === "clear" ? "clear-icon" : ""
 												}`}
 												onClick={() =>
-													searchStates[index] === 'clear'
+													searchStates[index] === "clear"
 														? handleClearSearch(index)
 														: handleCourseSearch(course.code, index)
 												}>
 												<i
 													className={`fas ${
-														searchStates[index] === 'clear' ? 'fa-times' : 'fa-search'
+														searchStates[index] === "clear" ? "fa-times" : "fa-search"
 													}`}
 													aria-hidden="true"></i>
 											</button>
@@ -288,7 +307,7 @@ const RequestForm = () => {
 										<select
 											className="input-field type"
 											value={course.type}
-											onChange={e => handleCourseChange(index, 'type', e.target.value)}>
+											onChange={e => handleCourseChange(index, "type", e.target.value)}>
 											<option value="add">Add</option>
 											<option value="drop">Drop</option>
 										</select>
@@ -306,7 +325,7 @@ const RequestForm = () => {
 											className="action-button delete"
 											type="button"
 											onClick={() => handleRemoveRow(index)}
-											readOnly={coursesRequest.length === 1}>
+											disabled={coursesRequest.length === 1}>
 											<i className="fas fa-trash-alt" aria-hidden="true"></i>
 										</button>
 									</td>

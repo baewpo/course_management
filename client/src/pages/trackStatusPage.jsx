@@ -1,10 +1,10 @@
-import { React } from 'react'
-import './trackStatusPage.scss'
-import TrackStatusTable from 'components/track-status/trackStatusTable'
+import { React } from "react"
+import "./trackStatusPage.scss"
+import TrackStatusTable from "components/track-status/trackStatusTable"
 
 const TrackStatusPage = () => {
 	return (
-		<div id='trackStatusPageComponent'>
+		<div id="trackStatusPageComponent">
 			<TrackStatusTable />
 		</div>
 	)

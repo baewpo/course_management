@@ -1,5 +1,5 @@
 class User {
-	constructor(name = '', email = '', role = '', number = '', year = '', major = '') {
+	constructor(name = "", email = "", role = "", number = "", year = "", major = "") {
 		this.name = name
 		this.email = email
 		this.role = role

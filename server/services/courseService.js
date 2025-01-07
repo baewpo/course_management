@@ -68,7 +68,7 @@ router.get("/request/user/:userId", async (req, res) => {
 			}),
 			...(courseCode && {
 				[Op.or]: courseCode.split(",").map((code) => ({
-					"$Course.course_code$": {
+					"$course.course_code$": {
 						[Op.iLike]: code.trim(),
 					},
 				})),
