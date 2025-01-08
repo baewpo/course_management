@@ -10,7 +10,7 @@ This project is part of the **Software Development** course. It is a system for 
 
 ## **Technologies Used**
 
-- **Frontend**: [React](https://reactjs.org/) for building the UI.
+- **Frontend**: [React](https://reactjs.org/) with **JavaScript** for building the UI.
 - **Backend**: [Node.js](https://nodejs.org/) and [Express](https://expressjs.com/) for building the API.
 - **Database**: [PostgreSQL](https://www.postgresql.org/) for storing data.
 - **Deployment**: Deployed on [Render](https://render.com/) -> [Course Management System](https://course-management-5wtp.onrender.com/)
