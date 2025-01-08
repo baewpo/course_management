@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import axios from "../../config/axiosConfig"
-import "./loginForm.css"
+import "./loginForm.scss"
 import { showToast } from "../general/toast"
 import { useAuth } from "../../contexts/AuthContext"
 
