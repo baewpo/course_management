@@ -9,7 +9,8 @@
 		"build": "vite build",
 		"format": "prettier --write .",
 		"lint": "eslint .",
-		"preview": "vite build --watch --mode preview & vite preview --mode preview"
+		"preview": "vite build --watch --mode preview & vite preview --mode preview",
+		"serve": "vite build --mode preview && vite preview --mode preview"
 	},
 	"dependencies": {
 		"@babel/core": "^7.26.0",
