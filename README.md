@@ -39,6 +39,7 @@ Here are the login credentials for the **Admin** and **Student** roles:
 ### **1. Run with Docker (using Docker Compose)**
 
 Make sure you have Docker and Docker Compose installed if you plan to use the Docker method.
+
 To run the project using Docker Compose, you can use the following command:
 
 ```bash
@@ -53,6 +54,7 @@ This will:
 By default:
 
 The frontend will be accessible at `http://localhost:4173`.
+
 The backend will be accessible at `http://localhost:8080`.
 
 ### **2. Run Frontend & Backend Locally**
