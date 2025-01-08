@@ -1,0 +1,123 @@
+.modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	.modal-content {
+		background-color: white;
+		padding: 20px;
+		border-radius: 8px;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		width: 100%;
+		overflow: hidden;
+		max-width: 500px;
+		margin: 20px;
+		.modal-label {
+			display: block;
+			margin-bottom: 10px;
+			font-size: 16px;
+			font-weight: bold;
+		}
+		.modal-course-table-container {
+			border: solid 1px blue;
+			border-radius: 5px;
+			height: calc(100vh - 540px);
+			min-height: 240px;
+			overflow-y: hidden;
+			overflow-x: auto;
+			table-layout: fixed;
+			.modal-course-table {
+				height: 100%;
+				border-collapse: collapse;
+				width: 100%;
+				.modal-course-table-thead {
+					background-color: blue;
+					color: white;
+					position: relative;
+					.modal-course-table-tr {
+						display: flex;
+						padding-right: 20px;
+						border-radius: 5px 5px 0 0;
+						.modal-course-table-th {
+							padding: 0 5px;
+							display: block;
+							text-overflow: ellipsis;
+							overflow: hidden;
+							white-space: nowrap;
+							width: 100%;
+							min-width: 80px;
+							&.code {
+								border-radius: 5px 0 0 0;
+							}
+							&.name {
+								border-right: 1px solid blue;
+								border-left: 1px solid white;
+							}
+							&.type {
+								border-right: 1px solid blue;
+								border-left: 1px solid white;
+								border-radius: 0 5px 0 0;
+							}
+						}
+					}
+				}
+			}
+			.modal-course-table-tbody {
+				display: block;
+				height: 100%;
+				overflow-y: scroll;
+				.modal-course-table-body-tr {
+					display: flex;
+					.modal-course-table-td {
+						display: block;
+						height: 48px;
+						padding: 12px 15px;
+						text-align: center;
+						background-color: #f4f4f4;
+						text-overflow: ellipsis;
+						overflow: hidden;
+						white-space: nowrap;
+						min-width: 80px;
+						width: 100%;
+						user-select: none;
+					}
+				}
+			}
+			.modal-course-table-body-tr:nth-child(even) .modal-course-table-td {
+				background-color: #e9ecef;
+			}
+		}
+	}
+	.modal-actions {
+		display: flex;
+		gap: 10px;
+		justify-content: flex-end;
+		margin-top: 20px;
+		.modal-button {
+			color: white;
+			padding: 8px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			width: 100px;
+			background-color: blue;
+			&:hover {
+				background-color: #1e1ead;
+			}
+			&.cancel {
+				background-color: white;
+				color: blue;
+				border: solid 1px blue;
+				&:hover {
+					background-color: #f0f0ff;
+				}
+			}
+		}
+	}
+}

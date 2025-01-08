@@ -3,86 +3,88 @@
 @include global.scrollBar();
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Kanit", sans-serif;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Kanit", sans-serif;
 }
 
 html,
 body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
 }
 
 .app-container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
 }
 
 .content-container {
-  overflow-y: auto;
-  height: 100vh;
+	overflow-y: auto;
+	height: 100vh;
+	@media (max-width: 768px) {
+		height: calc(100vh - 100px);
+	}
+	@media (min-width: 768px) and (max-width: 1024px) and (max-height: 660px) and (orientation: landscape) {
+		height: calc(100vh - 50px);
+	}
+	@media (min-width: 1024px) and (max-height: 660px) and (orientation: landscape) {
+		height: calc(100vh - 40px);
+	}
 }
-
-@media (max-width: 768px) {
-  .content-container {
-    height: calc(100vh - 100px);
-  }
-}
-
 
 input:-webkit-autofill {
-  background-color: transparent !important;
-  -webkit-box-shadow: 0 0 0 1000px white inset !important;
-  transition: background-color 5000s ease-in-out 0s;
+	background-color: transparent !important;
+	-webkit-box-shadow: 0 0 0 1000px white inset !important;
+	transition: background-color 5000s ease-in-out 0s;
 }
 
 input:-moz-autofill {
-  background-color: white !important;
+	background-color: white !important;
 }
 
 input:autofill {
-  background-color: white !important;
+	background-color: white !important;
 }
 
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+	height: 6em;
+	padding: 1.5em;
+	will-change: filter;
+	transition: filter 300ms;
 }
 
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+	filter: drop-shadow(0 0 2em #646cffaa);
 }
 
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+	filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
 @keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+	a:nth-of-type(2) .logo {
+		animation: logo-spin infinite 20s linear;
+	}
 }
 
 .card {
-  padding: 2em;
+	padding: 2em;
 }
 
 .read-the-docs {
-  color: #888;
+	color: #888;
 }

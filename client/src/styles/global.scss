@@ -1,0 +1,24 @@
+@mixin scrollBar() {
+	::-webkit-scrollbar {
+		height: 20px;
+		width: 20px;
+		background-color: rgba(255, 255, 255, 0);
+	}
+	::-webkit-scrollbar-track,
+	::-webkit-scrollbar-thumb {
+		border: 6px solid rgba(255, 255, 255, 0);
+		background-clip: padding-box;
+	}
+	::-webkit-scrollbar-track {
+		background-color: #ebebff;
+		border-radius: 20px;
+	}
+	::-webkit-scrollbar-thumb {
+		background-color: blue;
+		border-radius: 20px;
+		&:hover {
+			background-color: darkblue;
+			cursor: pointer;
+		}
+	}
+}
