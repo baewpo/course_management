@@ -1,10 +1,9 @@
 import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react"
-import eslint from "vite-plugin-eslint"
 import path from "path"
 
 export default defineConfig({
-	plugins: [react(), eslint({ fix: false })],
+	plugins: [react()],
 	resolve: {
 		alias: {
 			config: path.resolve(__dirname, "src/config"),
@@ -16,4 +15,8 @@ export default defineConfig({
 			routes: path.resolve(__dirname, "src/routes"),
 		},
 	},
+	server: {
+		port: 5173, // กำหนดพอร์ตเป็น 5173
+		host: "0.0.0.0", // เปิดให้เครื่องภายนอก Docker เข้าถึงได้
+	}
 })
