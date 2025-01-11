@@ -34,6 +34,7 @@ const Course = sequelize.define(
   {
     tableName: "courses",
     timestamps: false,
+    schema: "course"
   }
 );
 

@@ -56,6 +56,7 @@ const RequestCourse = sequelize.define(
 	{
 		tableName: "request_courses",
 		timestamps: true,
+		schema: "course",
 	}
 )
 
