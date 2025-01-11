@@ -10,9 +10,9 @@ This project is part of the **Software Development** course. It is a system for 
 
 ## **Technologies Used**
 
-- **Frontend**: [React](https://reactjs.org/) with **JavaScript** for building the UI.
-- **Backend**: [Node.js](https://nodejs.org/) and [Express](https://expressjs.com/) for building the API.
-- **Database**: [PostgreSQL](https://www.postgresql.org/) for storing data.
+- **Frontend**: [React](https://reactjs.org/) with **JavaScript** and SCSS for building building a responsive and UI.
+- **Backend**: [Node.js](https://nodejs.org/) and [Express](https://expressjs.com/) for developing the API.
+- **Database**: [PostgreSQL](https://www.postgresql.org/) for data storage.
 - **Deployment**: Deployed on [Railway](https://render.com/) -> [Course Management System](https://courese-management-test.up.railway.app/create-request)
 
 **Note**: This deployment link is temporary and may be removed in the future as the deployment is for testing purposes.
