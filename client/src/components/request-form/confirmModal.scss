@@ -27,8 +27,7 @@
 		.modal-course-table-container {
 			border: solid 1px blue;
 			border-radius: 5px;
-			height: calc(100vh - 540px);
-			min-height: 240px;
+			height: 240px;
 			overflow-y: hidden;
 			overflow-x: auto;
 			table-layout: fixed;
